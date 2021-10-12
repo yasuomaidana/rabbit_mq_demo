@@ -1,2 +1,9 @@
 docker run -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -p 3306:3306 mysql
 docker run -d --hostname my-rabbit --name some-rabbit-management -p 8080:15672 rabbitmq:3-management
+
+Using vscode tool if we select build image
+d:latest {version} -t firstimage {name of the image, it must be lowercase}
+
+docker run -e {environment variables} MYSQL_ALLOW_EMPTY_PASSWORD=yes -p{port} 3306:3306 {mycomputerport:containerport} mysql
+
+docker run -d {detached} -v{links files or directories} {computer directory}:{container directory}
