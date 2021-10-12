@@ -1,0 +1,18 @@
+#Select wich image is going to execute
+FROM mysql:latest
+#Set where all commands are going to be run
+WORKDIR /example
+#Copy from whatever I have in this location (dockerfile) to container direction
+COPY . .
+
+#RUN command //Runs the command when the image is being created
+#RUN yarn install -production //Runs the command yarn install
+
+#Specify which command(s) must run when we start the container
+#CMD ["Command","Argument"]
+
+#ENTRYPOINT program //Runs the program at container starting, and all arguments passed through run -it goes there as input
+#ENTRYPOINT "Converts the container in something executable"
+#Selects the port where it will be showed
+EXPOSE 3600
+

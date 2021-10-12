@@ -1,0 +1,4 @@
+services:
+  rabbitmq3:
+    image:rabbitmq
+      
