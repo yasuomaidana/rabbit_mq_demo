@@ -7,5 +7,5 @@ def searchContainerbyName(containerName):
 if (searchContainerbyName("rabbitmodule")):
     os.system('docker start rabbitmodule')
 else:
-    os.system('docker run -d --hostname my-rabbit --name rabbitmodule -p 8085:15672 rabbitmq:3-management')
+    os.system('docker run -d --hostname my-rabbit --name rabbitmodule -p 8085:15672 -p 8086:5672 rabbitmq:3-management')
 
