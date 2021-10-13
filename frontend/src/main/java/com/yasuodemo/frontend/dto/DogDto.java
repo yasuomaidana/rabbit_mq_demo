@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor @AllArgsConstructor @Builder
-public class DogsDto {
-
+public class DogDto {
+    private String name;
 }
