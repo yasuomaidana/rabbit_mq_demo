@@ -35,7 +35,18 @@
             </div>
         </header>
         <main>
-
+            <div class="container mx-auto align-content-center bg-light mt-4 py-5">
+                <form action="/register" method="post">
+                    <div class="mx-auto">
+                        <label for="name">Dog's name</label>
+                        <input type="text" name="name" id="name">
+                    </div>
+                    <div class="mx-auto">
+                        <input type="submit" value="Register new dog">
+                    </div>
+                    
+                </form>
+            </div>
         </main>
         <footer>
 
