@@ -1,23 +1,25 @@
-package com.yasuodemo.frontend.config;
+package com.example.frontend.config;
 
+import config.MQConfig;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
-@EnableWebMvc
-public class WebConfig extends WebMvcConfigurerAdapter {
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry){
-        registry
-                .addResourceHandler("/static/**")
-                .addResourceLocations("/static/");
+public class WebConfig extends MQConfig{
+
+    @Bean
+    public AmqpTemplate template(ConnectionFactory connectionFactory){
+        RabbitTemplate template = new RabbitTemplate(connectionFactory);
+        template.setMessageConverter(messageConverter());
+        return template;
     }
+
     @Bean
     public ViewResolver viewResolver(){
         InternalResourceViewResolver resourceViewResolver = new InternalResourceViewResolver();

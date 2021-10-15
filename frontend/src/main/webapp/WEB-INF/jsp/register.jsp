@@ -17,8 +17,8 @@
         <header class="p-3 bg-dark text-white">
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-start">
-                    <img src="../../static/images/list.jpg.webp" class="d-none d-lg-block" style="height: 50px;">
-                    <img src="../../static/images/list.jpg.webp" class="d-block d-lg-none" style="height: 2em;">
+                    <img src="../../../../../../sktdemo/frontend/src/main/webapp/static/images/list.jpg.webp" class="d-none d-lg-block" style="height: 50px;">
+                    <img src="../../../../../../sktdemo/frontend/src/main/webapp/static/images/list.jpg.webp" class="d-block d-lg-none" style="height: 2em;">
                     <span class="m-auto"></span>
                     <ul class="nav col-10 col-lg-auto mb-2 justify-content-center mb-md-0">
                         <li>
