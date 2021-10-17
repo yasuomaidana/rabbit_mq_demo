@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller @RequestMapping("/")
 @AllArgsConstructor
 public class DogController {
@@ -18,6 +23,19 @@ public class DogController {
 
     @GetMapping("/show")
     public String show(){
+        template.convertAndSend(WebConfig.EXCHANGE,WebConfig.SHOW_ROUTING_KEY,"Hi");
+        ArrayList<LinkedHashMap> rawInfo = (ArrayList<LinkedHashMap>) template.receiveAndConvert(WebConfig.SHOW_ANSWER_QUEUE, 6000);
+        List<DogDto> dogs = rawInfo.stream()
+                .map(rawDog->{
+                        Integer age = (Integer) rawDog.get("age");
+                        return DogDto.builder()
+                                .name((String) rawDog.get("name"))
+                                .race((String) rawDog.get("race"))
+                                .age(age.byteValue())
+                                .build();
+                })
+                .collect(Collectors.toList());
+        System.out.println(dogs);
         return "show";
     }
     @GetMapping("/register")
@@ -25,8 +43,10 @@ public class DogController {
         return "register";
     }
     @PostMapping("/register")
-    public String newDogRegister(Model model, DogDto dog){
-        template.convertAndSend(WebConfig.EXCHANGE,WebConfig.ROUTING_KEY,dog);
+    public String newDogRegister(DogDto dog){
+        template.convertAndSend(WebConfig.EXCHANGE,WebConfig.SAVE_ROUTING_KEY,dog);
         return "show";
     }
+
+
 }
