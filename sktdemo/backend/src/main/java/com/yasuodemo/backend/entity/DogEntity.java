@@ -1,6 +1,5 @@
 package com.yasuodemo.backend.entity;
 
-import dto.DogDto;
 import lombok.Data;
 
 import javax.persistence.Column;
