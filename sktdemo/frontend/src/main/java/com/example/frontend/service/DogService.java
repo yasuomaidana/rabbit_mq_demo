@@ -1,6 +1,7 @@
 package com.example.frontend.service;
 
 import com.example.frontend.config.WebConfig;
+import constant.RabbitConstants;
 import dto.DogDto;
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -16,10 +17,11 @@ import java.util.stream.Collectors;
 public class DogService {
 
     private RabbitTemplate template;
+    private RabbitConstants constants;
 
     public List<DogDto> getDogs(){
-        template.convertAndSend(WebConfig.EXCHANGE,WebConfig.SHOW_ROUTING_KEY,"Hi");
-        ArrayList<LinkedHashMap> rawInfo = (ArrayList<LinkedHashMap>) template.receiveAndConvert(WebConfig.SHOW_ANSWER_QUEUE, 6000);
+        template.convertAndSend(constants.exchange,constants.showRoutingKey,"Hi");
+        ArrayList<LinkedHashMap> rawInfo = (ArrayList<LinkedHashMap>) template.receiveAndConvert(constants.showAnswerQueue, 6000);
         return  rawInfo.stream()
                 .map(rawDog->{
                     Integer age = (Integer) rawDog.get("age");
@@ -33,6 +35,7 @@ public class DogService {
     }
 
     public void saveDog(DogDto dog){
-        template.convertAndSend(WebConfig.EXCHANGE,WebConfig.SAVE_ROUTING_KEY,dog);
+        template.convertAndSend(constants.exchange,constants.saveRoutingKey,dog);
+        getDogs();
     }
 }
