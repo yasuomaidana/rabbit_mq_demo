@@ -18,6 +18,7 @@ public class DogService {
     private RabbitTemplate template;
 
     public List<DogDto> getDogs(){
+        template.convertAndSend(WebConfig.EXCHANGE,WebConfig.SHOW_ROUTING_KEY,"Hi");
         ArrayList<LinkedHashMap> rawInfo = (ArrayList<LinkedHashMap>) template.receiveAndConvert(WebConfig.SHOW_ANSWER_QUEUE, 6000);
         return  rawInfo.stream()
                 .map(rawDog->{
