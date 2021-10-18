@@ -10,12 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MQConfig {
 
-    public static final String SHOW_QUEUE="show_queue";
-    public static final String SHOW_ANSWER_QUEUE="show_answer_queue";
-    public static final String SAVE_ROUTING_KEY = "save_routingKey";
-    public static final String SHOW_ROUTING_KEY = "show_routingKey";
-    public static final String SHOW_ANSWER_ROUTING_KEY = "show_answer_routingKey";
-
     @Bean public RabbitConstants rabbitConstants(){
         return new RabbitConstants();
     }
@@ -30,27 +24,27 @@ public class MQConfig {
         return new Queue(constants.saveQueue);
     }
     @Bean
-    public Queue showQueue(){return new Queue(SHOW_QUEUE);}
+    public Queue showQueue(){return new Queue(rabbitConstants().showQueue);}
     @Bean
-    public Queue showAnswerQueue(){return new Queue(SHOW_ANSWER_QUEUE);}
+    public Queue showAnswerQueue(){return new Queue(rabbitConstants().showAnswerQueue);}
     //Binding
     @Bean
     public Binding saveBinding(Queue saveQueue, TopicExchange exchange){
         return BindingBuilder
                 .bind(saveQueue)
-                .to(exchange).with(SAVE_ROUTING_KEY);
+                .to(exchange).with(rabbitConstants().saveRoutingKey);
     }
     @Bean
     public Binding showBinding(Queue showQueue, TopicExchange exchange){
         return BindingBuilder
                 .bind(showQueue)
-                .to(exchange).with(SHOW_ROUTING_KEY);
+                .to(exchange).with(rabbitConstants().showRoutingKey);
     }
     @Bean
     public Binding showAnswerBinding(Queue showAnswerQueue, TopicExchange exchange){
         return BindingBuilder
                 .bind(showAnswerQueue)
-                .to(exchange).with(SHOW_ANSWER_ROUTING_KEY);
+                .to(exchange).with(rabbitConstants().showAnswerRoutingKey);
     }
 
     @Bean
