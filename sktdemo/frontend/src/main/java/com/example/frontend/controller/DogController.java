@@ -28,8 +28,7 @@ public class DogController {
     @PostMapping("/register")
     public String newDogRegister(Model model,DogDto dog){
         dogService.saveDog(dog);
-        model.addAttribute("dogs",dogService.getDogs());
-        return "show";
+        return "redirect:/show";
     }
 
 
