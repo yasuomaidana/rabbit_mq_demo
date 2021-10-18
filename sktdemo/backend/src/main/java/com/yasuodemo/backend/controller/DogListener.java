@@ -17,7 +17,7 @@ public class DogListener {
 
     @RabbitListener(queues = MQConfig.SAVE_QUEUE)
     public void listenNewDog(DogDto dog){
-        System.out.println("Preparing to save : "+dog);
+        dogService.saveDog(dog);
     }
 
     @RabbitListener(queues = MQConfig.SHOW_QUEUE)
