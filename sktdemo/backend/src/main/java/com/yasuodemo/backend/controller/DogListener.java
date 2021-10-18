@@ -26,7 +26,6 @@ public class DogListener {
         dogService.saveDog(dog);
     }
 
-    @RabbitListener(queues = MQConfig.SHOW_QUEUE)
     public void listenShowDog(String message){
         template.convertAndSend(constants.exchange,MQConfig.SHOW_ANSWER_ROUTING_KEY,dogService.getDogs());
     }
