@@ -1,5 +1,6 @@
 package config;
 
+import constant.RabbitConstants;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -8,22 +9,25 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MQConfig {
-    public static final String EXCHANGE = "skt_demo_exchange";
-    public static final String SAVE_QUEUE = "save_queue";
+
     public static final String SHOW_QUEUE="show_queue";
     public static final String SHOW_ANSWER_QUEUE="show_answer_queue";
     public static final String SAVE_ROUTING_KEY = "save_routingKey";
     public static final String SHOW_ROUTING_KEY = "show_routingKey";
     public static final String SHOW_ANSWER_ROUTING_KEY = "show_answer_routingKey";
 
+    @Bean public RabbitConstants rabbitConstants(){
+        return new RabbitConstants();
+    }
     @Bean
-    public TopicExchange exchange(){
-        return new TopicExchange(EXCHANGE);
+    public TopicExchange exchange(RabbitConstants constants)
+    {
+        return new TopicExchange(constants.exchange);
     }
     //Queues
     @Bean
-    public Queue saveQueue(){
-        return new Queue(SAVE_QUEUE);
+    public Queue saveQueue(RabbitConstants constants){
+        return new Queue(constants.saveQueue);
     }
     @Bean
     public Queue showQueue(){return new Queue(SHOW_QUEUE);}
