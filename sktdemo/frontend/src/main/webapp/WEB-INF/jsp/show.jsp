@@ -1,4 +1,5 @@
-<%--
+<%@ page import="dto.DogDto" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: ymaidana
   Date: 14/10/21
@@ -37,20 +38,23 @@
         <main>
             <table class="table table-hover">
                 <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Dog's name</th>
-                    <th scope="col">Race</th>
-                    <th scope="col">Age [years:months]</th>
-                </tr>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Dog's name</th>
+                        <th scope="col">Race</th>
+                        <th scope="col">Age [years:months]</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>12</td>
-                    <td>1</td>
-                </tr>
+                <%
+                    List<DogDto> dogs = (List<DogDto>) request.getAttribute("dogs");
+                    String row = "<tr><th scope=\"row\">%d</th><td>%s</td><td>%s</td><td>%d</td></tr>";
+                    int i =0;
+                    for(DogDto dog: dogs){
+                        i++;
+                        out.print(String.format(row,i,dog.getName(),dog.getRace(),dog.getAge()));
+                    }
+                %>
                 </tbody>
             </table>
         </main>

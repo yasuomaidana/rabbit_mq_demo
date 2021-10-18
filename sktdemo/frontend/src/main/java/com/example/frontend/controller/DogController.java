@@ -22,7 +22,7 @@ public class DogController {
     private RabbitTemplate template;
 
     @GetMapping("/show")
-    public String show(){
+    public String show(Model model){
         template.convertAndSend(WebConfig.EXCHANGE,WebConfig.SHOW_ROUTING_KEY,"Hi");
         ArrayList<LinkedHashMap> rawInfo = (ArrayList<LinkedHashMap>) template.receiveAndConvert(WebConfig.SHOW_ANSWER_QUEUE, 6000);
         List<DogDto> dogs = rawInfo.stream()
@@ -35,7 +35,7 @@ public class DogController {
                                 .build();
                 })
                 .collect(Collectors.toList());
-        System.out.println(dogs);
+        model.addAttribute("dogs",dogs);
         return "show";
     }
     @GetMapping("/register")
