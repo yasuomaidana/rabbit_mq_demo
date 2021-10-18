@@ -1,0 +1,12 @@
+server:
+  port: 8081
+spring:
+  rabbitmq:
+    port: 8086
+#Database things
+  datasource:
+    url: jdbc:mysql://localhost:3306/demo
+    name: demo
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
