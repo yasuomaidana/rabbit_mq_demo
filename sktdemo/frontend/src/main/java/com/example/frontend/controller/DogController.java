@@ -1,50 +1,34 @@
 package com.example.frontend.controller;
 
-import com.example.frontend.config.WebConfig;
+import com.example.frontend.service.DogService;
 import dto.DogDto;
 import lombok.AllArgsConstructor;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Controller @RequestMapping("/")
 @AllArgsConstructor
 public class DogController {
 
-    private RabbitTemplate template;
+    private DogService dogService;
 
     @GetMapping("/show")
     public String show(Model model){
-        template.convertAndSend(WebConfig.EXCHANGE,WebConfig.SHOW_ROUTING_KEY,"Hi");
-        ArrayList<LinkedHashMap> rawInfo = (ArrayList<LinkedHashMap>) template.receiveAndConvert(WebConfig.SHOW_ANSWER_QUEUE, 6000);
-        List<DogDto> dogs = rawInfo.stream()
-                .map(rawDog->{
-                        Integer age = (Integer) rawDog.get("age");
-                        return DogDto.builder()
-                                .name((String) rawDog.get("name"))
-                                .race((String) rawDog.get("race"))
-                                .age(age.byteValue())
-                                .build();
-                })
-                .collect(Collectors.toList());
-        model.addAttribute("dogs",dogs);
+        model.addAttribute("dogs",dogService.getDogs());
         return "show";
     }
     @GetMapping("/register")
     public String register(){
         return "register";
     }
+
     @PostMapping("/register")
-    public String newDogRegister(DogDto dog){
-        template.convertAndSend(WebConfig.EXCHANGE,WebConfig.SAVE_ROUTING_KEY,dog);
+    public String newDogRegister(Model model,DogDto dog){
+        dogService.saveDog(dog);
+        model.addAttribute("dogs",dogService.getDogs());
         return "show";
     }
 
