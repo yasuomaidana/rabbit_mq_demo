@@ -17,7 +17,7 @@
     </parent>
 
     <modules>
-        <module>SharedLibrary</module>
+        <module>shared_library</module>
         <module>frontend</module>
         <module>backend</module>
     </modules>
