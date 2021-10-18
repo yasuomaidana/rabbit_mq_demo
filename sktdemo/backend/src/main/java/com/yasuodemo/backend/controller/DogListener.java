@@ -27,6 +27,6 @@ public class DogListener {
     }
 
     public void listenShowDog(String message){
-        template.convertAndSend(constants.exchange,MQConfig.SHOW_ANSWER_ROUTING_KEY,dogService.getDogs());
+        template.convertAndSend(constants.exchange,constants.showAnswerRoutingKey,dogService.getDogs());
     }
 }

@@ -16,6 +16,6 @@ public class ShowListener implements MessageListener {
     private RabbitConstants constants;
     @Override
     public void onMessage(Message message) {
-        template.convertAndSend(constants.exchange, MQConfig.SHOW_ANSWER_ROUTING_KEY,dogService.getDogs());
+        template.convertAndSend(constants.exchange, constants.showAnswerRoutingKey, dogService.getDogs());
     }
 }

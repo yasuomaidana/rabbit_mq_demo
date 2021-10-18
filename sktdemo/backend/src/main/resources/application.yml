@@ -14,3 +14,9 @@ rabbit:
   exchange: "skt_demo_exchange"
   queue:
     save: "save_queue"
+    show: "show_queue"
+    show_answer: "show_answer_queue"
+  routing_key:
+    save: "save_routingKey"
+    show: "show_routingKey"
+    show_answer: "show_answer_routingKey"
