@@ -1,6 +1,5 @@
 package com.example.frontend.service;
 
-import com.example.frontend.config.WebConfig;
 import constant.RabbitConstants;
 import dto.DogDto;
 import lombok.AllArgsConstructor;
