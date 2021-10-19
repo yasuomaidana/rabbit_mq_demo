@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
+
 @Controller @RequestMapping("/")
 @AllArgsConstructor
 public class DogController {
@@ -29,7 +31,11 @@ public class DogController {
     @PostMapping("/register")
     public String newDogRegister(Model model, DogDto dog, Errors errors){
         if(errors.hasErrors()){
-            System.out.println("ENTER");
+            HashMap<String,String> rawInfo = new HashMap<>();
+            rawInfo.put("name",dog.getName());
+            rawInfo.put("race",dog.getRace());
+            model.addAttribute("Error",rawInfo);
+            return "register";
         }
         dogService.saveDog(dog);
         return "redirect:/show";
