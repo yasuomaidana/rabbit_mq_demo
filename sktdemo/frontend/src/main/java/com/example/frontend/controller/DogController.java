@@ -1,32 +1,45 @@
 package com.example.frontend.controller;
 
-import com.example.frontend.config.WebConfig;
+import com.example.frontend.service.DogService;
 import dto.DogDto;
 import lombok.AllArgsConstructor;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.HashMap;
 
 @Controller @RequestMapping("/")
 @AllArgsConstructor
 public class DogController {
 
-    private RabbitTemplate template;
+    private DogService dogService;
 
     @GetMapping("/show")
-    public String show(){
+    public String show(Model model){
+        model.addAttribute("dogs",dogService.getDogs());
         return "show";
     }
     @GetMapping("/register")
     public String register(){
         return "register";
     }
+
     @PostMapping("/register")
-    public String newDogRegister(Model model, DogDto dog){
-        template.convertAndSend(WebConfig.EXCHANGE,WebConfig.ROUTING_KEY,dog);
-        return "show";
+    public String newDogRegister(Model model, DogDto dog, Errors errors){
+        if(errors.hasErrors()){
+            HashMap<String,String> rawInfo = new HashMap<>();
+            rawInfo.put("name",dog.getName());
+            rawInfo.put("race",dog.getRace());
+            model.addAttribute("Error",rawInfo);
+            return "register";
+        }
+        dogService.saveDog(dog);
+        return "redirect:/show";
     }
+
+
 }

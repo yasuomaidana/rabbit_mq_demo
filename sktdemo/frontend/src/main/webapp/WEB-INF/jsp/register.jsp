@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.HashMap" %><%--
   Created by IntelliJ IDEA.
   User: ymaidana
   Date: 14/10/21
@@ -36,17 +36,24 @@
             </div>
         </header>
         <main>
+            <%
+                Boolean errorIn = request.getAttribute("Error")==null;
+                HashMap<String,String> prevInfo = (HashMap<String, String>) request.getAttribute("Error");
+            %>
             <div class="container mx-auto col-6 align-content-center bg-light mt-4 py-5">
+                <div class="d-<%= errorIn?"none":"block"%> text-center text-warning"><b class="display-6">Please fill all the sections</b></div>
                 <form action="/register" method="post">
                     <label for="dogsname" class="form-label">Dog's race</label>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1"><i class="fas fa-dog"></i></span>
-                        <input type="text" class="form-control" placeholder="Dog's name" aria-label="Dog's name" id="dogsname" aria-describedby="basic-addon1" name="name">
+                        <input type="text" class="form-control" placeholder="Dog's name" aria-label="Dog's name" id="dogsname" aria-describedby="basic-addon1" name="name" required
+                               value="<%= errorIn? "":prevInfo.get("name")%>">
                     </div>
                     <div class="row g-2 mb-3">
                         <div class="col-md">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="race" placeholder="Dog's race" name="race">
+                                <input type="text" class="form-control" id="race" placeholder="Dog's race" name="race" required
+                                       value="<%= errorIn? "":prevInfo.get("race")%>">
                                 <label for="race">Dog's race</label>
                             </div>
                         </div>
