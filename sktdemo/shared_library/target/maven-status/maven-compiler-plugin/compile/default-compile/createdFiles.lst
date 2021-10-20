@@ -1,4 +1,0 @@
-config/MQConfig.class
-constant/RabbitConstants.class
-dto/DogDto$DogDtoBuilder.class
-dto/DogDto.class

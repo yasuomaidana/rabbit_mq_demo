@@ -1,6 +1,5 @@
 package com.yasuodemo.backend.controller.dogListener;
 
-import com.yasuodemo.backend.config.MQConfig;
 import com.yasuodemo.backend.service.DogService;
 import constant.RabbitConstants;
 import lombok.AllArgsConstructor;
