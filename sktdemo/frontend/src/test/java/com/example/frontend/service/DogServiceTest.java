@@ -55,4 +55,5 @@ class DogServiceTest {
         doNothing().when(template).convertAndSend(constants.exchange,constants.saveRoutingKey,dog);
         dogService.saveDog(dog);
     }
+
 }

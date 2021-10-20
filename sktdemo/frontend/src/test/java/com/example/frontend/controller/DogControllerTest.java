@@ -43,7 +43,7 @@ class DogControllerTest {
         dog = DogDto.builder().name("Terry").race("Doverman").age((byte) 2).build();
         dogs.add(dog);
         when(dogService.getDogs()).thenReturn(dogs);
-        doNothing().when(dogService).saveDog(any(DogDto.class));
+        when(dogService.saveDog(any(DogDto.class))).thenReturn(dogs);
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setPrefix("/WEB-INF/");
         viewResolver.setSuffix(".jsp");

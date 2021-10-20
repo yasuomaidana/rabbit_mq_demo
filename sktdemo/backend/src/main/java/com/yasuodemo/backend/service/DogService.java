@@ -1,5 +1,6 @@
 package com.yasuodemo.backend.service;
 
+import com.yasuodemo.backend.entity.DogEntity;
 import com.yasuodemo.backend.repository.DogRepository;
 import dto.DogDto;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,14 @@ public class DogService {
     private DogRepository repository;
 
     public List<DogDto> getDogs(){
-        return repository.getDogs().stream()
+        return converToList(repository.getDogs());
+    }
+
+    public List<DogDto> saveDog(DogDto dog){
+        return converToList(repository.saveDog(dog.getName(), dog.getRace(),dog.getAge()));
+    }
+    private List<DogDto> converToList(List<DogEntity> rawDogs){
+        return rawDogs.stream()
                 .map(dogEntity ->
                         {
                             return DogDto.builder()
@@ -25,9 +33,5 @@ public class DogService {
                         }
                 )
                 .collect(Collectors.toList());
-    }
-
-    public void saveDog(DogDto dog){
-        repository.saveDog(dog.getName(), dog.getRace(),dog.getAge());
     }
 }

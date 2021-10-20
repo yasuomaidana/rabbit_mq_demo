@@ -25,7 +25,7 @@ public class MQConfig extends config.MQConfig {
     @Bean
     public MessageListenerContainer saveListenerContainer(ConnectionFactory connectionFactory,DogService dogService, RabbitTemplate rabbitTemplate) {
         SimpleMessageListenerContainer container = containerGenerator(connectionFactory,rabbitConstants().saveQueue);
-        container.setMessageListener(new SaveListener(dogService,rabbitTemplate));
+        container.setMessageListener(new SaveListener(dogService,rabbitTemplate,rabbitConstants()));
         return container;
     }
 

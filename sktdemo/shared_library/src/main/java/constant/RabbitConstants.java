@@ -12,6 +12,8 @@ public class RabbitConstants {
     public String showQueue;
     @Value("${rabbit.queue.show_answer}")
     public String showAnswerQueue;
+    @Value("${rabbit.queue.save_answer}")
+    public String saveAnswerQueue;
 
     @Value("${rabbit.routing_key.save}")
     public String saveRoutingKey;
@@ -19,4 +21,6 @@ public class RabbitConstants {
     public String showRoutingKey;
     @Value("${rabbit.routing_key.show_answer}")
     public String showAnswerRoutingKey;
+    @Value("${rabbit.routing_key.save_answer}")
+    public String saveAnswerRoutingKey;
 }

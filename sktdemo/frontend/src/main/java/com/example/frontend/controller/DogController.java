@@ -37,9 +37,8 @@ public class DogController {
             model.addAttribute("Error",rawInfo);
             return "register";
         }
-        dogService.saveDog(dog);
+        model.addAttribute("dogs",dogService.saveDog(dog));
         return "redirect:/show";
     }
-
 
 }

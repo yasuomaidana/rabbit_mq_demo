@@ -19,7 +19,7 @@ public interface DogRepository extends JpaRepository<DogEntity,Integer> {
     @Transactional
     @Modifying
     @Query(value="{call saveDog(:nameIn, :raceIn, :ageIN)}",nativeQuery = true)
-    void saveDog(
+    List<DogEntity> saveDog(
             @Param("nameIn") String nameIn,
             @Param("raceIn") String raceIn,
             @Param("ageIN") Byte ageIn);

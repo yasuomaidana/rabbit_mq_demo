@@ -20,7 +20,18 @@ public class DogService {
 
     public List<DogDto> getDogs(){
         template.convertAndSend(constants.exchange,constants.showRoutingKey,"Hi");
-        ArrayList<LinkedHashMap> rawInfo = (ArrayList<LinkedHashMap>) template.receiveAndConvert(constants.showAnswerQueue, 6000);
+        return  rawToList(template.receiveAndConvert(constants.showAnswerQueue, 6000));
+    }
+
+    public List<DogDto> saveDog(DogDto dog){
+        template.convertAndSend(constants.exchange,constants.saveRoutingKey,dog);
+        Object recMessage = template.receiveAndConvert(constants.saveAnswerQueue, 6000);
+        while(recMessage==null){
+        }
+        return rawToList(recMessage);
+    }
+    private List<DogDto> rawToList(Object rawResponse){
+        ArrayList<LinkedHashMap> rawInfo = (ArrayList<LinkedHashMap>) rawResponse;
         return  rawInfo.stream()
                 .map(rawDog->{
                     Integer age = (Integer) rawDog.get("age");
@@ -31,10 +42,5 @@ public class DogService {
                             .build();
                 })
                 .collect(Collectors.toList());
-    }
-
-    public void saveDog(DogDto dog){
-        template.convertAndSend(constants.exchange,constants.saveRoutingKey,dog);
-        getDogs();
     }
 }

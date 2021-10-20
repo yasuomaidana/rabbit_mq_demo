@@ -10,7 +10,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MQConfig {
 
-    @Bean public RabbitConstants rabbitConstants(){
+    @Bean
+    public RabbitConstants rabbitConstants(){
         return new RabbitConstants();
     }
     @Bean
@@ -24,9 +25,17 @@ public class MQConfig {
         return new Queue(constants.saveQueue);
     }
     @Bean
-    public Queue showQueue(){return new Queue(rabbitConstants().showQueue);}
+    public Queue showQueue(){
+        return new Queue(rabbitConstants().showQueue);
+    }
     @Bean
-    public Queue showAnswerQueue(){return new Queue(rabbitConstants().showAnswerQueue);}
+    public Queue showAnswerQueue(){
+        return new Queue(rabbitConstants().showAnswerQueue);
+    }
+    @Bean
+    public Queue saveAnswerQueue(){
+        return new Queue(rabbitConstants().saveAnswerQueue);
+    }
     //Binding
     @Bean
     public Binding saveBinding(Queue saveQueue, TopicExchange exchange){
@@ -46,7 +55,12 @@ public class MQConfig {
                 .bind(showAnswerQueue)
                 .to(exchange).with(rabbitConstants().showAnswerRoutingKey);
     }
-
+    @Bean
+    public Binding saveAnswerBinding(Queue saveAnswerQueue, TopicExchange exchange){
+        return BindingBuilder
+                .bind(saveAnswerQueue)
+                .to(exchange).with(rabbitConstants().saveAnswerRoutingKey);
+    }
     @Bean
     public MessageConverter messageConverter(){
         return new Jackson2JsonMessageConverter();
