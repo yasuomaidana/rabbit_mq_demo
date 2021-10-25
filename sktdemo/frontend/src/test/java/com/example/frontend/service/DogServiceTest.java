@@ -64,9 +64,9 @@ class DogServiceTest {
     @Test
     void saveDog() {
         doNothing().when(template).convertAndSend(constants.getExchange(),constants.getRoutingKey().getShow(),"Hi");
-        when(template.receiveAndConvert(constants.getQueue().getShowAnswer(),6000)).thenReturn(rawDogs);
+        when(template.receiveAndConvert(constants.getQueue().getSaveAnswer(),6000)).thenReturn(rawDogs);
         doNothing().when(template).convertAndSend(constants.getExchange(),constants.getRoutingKey().getSave(),dog);
-        dogService.saveDog(dog);
+        assertNotNull(dogService.saveDog(dog));
     }
 
 }
