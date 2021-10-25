@@ -7,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
     <head>
         <title>Show items</title>
@@ -46,15 +47,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                <%
-                    List<Dog> dogs = (List<Dog>) request.getAttribute("dogs");
-                    String row = "<tr><th scope=\"row\">%d</th><td>%s</td><td>%s</td><td>%d</td></tr>";
-                    int i =0;
-                    for(Dog dog: dogs){
-                        i++;
-                        out.print(String.format(row,i,dog.getName(),dog.getRace(),dog.getAge()));
-                    }
-                %>
+                    <c:forEach items="${dogs}" var="dog" varStatus="Count">
+                        <tr>
+                            <th scope="row">${Count.getCount()}</th>
+                            <td>${dog.getName()}</td>
+                            <td>${dog.getRace()}</td>
+                            <td>${dog.getAge()}</td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </main>
