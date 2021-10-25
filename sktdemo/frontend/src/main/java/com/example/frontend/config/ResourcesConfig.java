@@ -1,5 +1,7 @@
 package com.example.frontend.config;
 
+import constant.RabbitConstants;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -13,5 +15,9 @@ public class ResourcesConfig extends WebMvcConfigurerAdapter {
         registry
                 .addResourceHandler("/static/images/**")
                 .addResourceLocations("/static/images/");
+    }
+    @Bean
+    public RabbitConstants rabbitConstants(){
+        return new RabbitConstants();
     }
 }

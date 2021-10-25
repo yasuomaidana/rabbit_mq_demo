@@ -1,26 +1,15 @@
 package constant;
 
-import org.springframework.beans.factory.annotation.Value;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
+@ConfigurationProperties(prefix = "rabbit")
+@Data
 public class RabbitConstants {
-    @Value("${rabbit.exchange}")
-    public String exchange;
+    private String exchange;
+    private RabbitQueuesConfigurationProperties queue;
+    private RabbitRoutingConfiguration routingKey;
 
-    @Value("${rabbit.queue.save}")
-    public String saveQueue;
-    @Value("${rabbit.queue.show}")
-    public String showQueue;
-    @Value("${rabbit.queue.show_answer}")
-    public String showAnswerQueue;
-    @Value("${rabbit.queue.save_answer}")
-    public String saveAnswerQueue;
-
-    @Value("${rabbit.routing_key.save}")
-    public String saveRoutingKey;
-    @Value("${rabbit.routing_key.show}")
-    public String showRoutingKey;
-    @Value("${rabbit.routing_key.show_answer}")
-    public String showAnswerRoutingKey;
-    @Value("${rabbit.routing_key.save_answer}")
-    public String saveAnswerRoutingKey;
 }

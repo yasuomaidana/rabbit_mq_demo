@@ -2,7 +2,7 @@ package com.yasuodemo.backend.service;
 
 import com.yasuodemo.backend.entity.DogEntity;
 import com.yasuodemo.backend.repository.DogRepository;
-import dto.DogDto;
+import dto.Dog;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,18 +14,19 @@ import java.util.stream.Collectors;
 public class DogService {
     private DogRepository repository;
 
-    public List<DogDto> getDogs(){
+    public List<Dog> getDogs(){
         return converToList(repository.getDogs());
     }
 
-    public List<DogDto> saveDog(DogDto dog){
+    public List<Dog> saveDog(Dog dog){
         return converToList(repository.saveDog(dog.getName(), dog.getRace(),dog.getAge()));
     }
-    private List<DogDto> converToList(List<DogEntity> rawDogs){
+    //add mapper
+    private List<Dog> converToList(List<DogEntity> rawDogs){
         return rawDogs.stream()
                 .map(dogEntity ->
                         {
-                            return DogDto.builder()
+                            return Dog.builder()
                                     .name(dogEntity.getName())
                                     .race(dogEntity.getRace())
                                     .age(dogEntity.getAge())

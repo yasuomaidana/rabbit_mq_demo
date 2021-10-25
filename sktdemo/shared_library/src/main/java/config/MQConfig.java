@@ -12,55 +12,51 @@ import constant.RabbitConstants;
 public class MQConfig {
 
     @Bean
-    public RabbitConstants rabbitConstants(){
-        return new RabbitConstants();
-    }
-    @Bean
     public TopicExchange exchange(RabbitConstants constants)
     {
-        return new TopicExchange(constants.exchange);
+        return new TopicExchange(constants.getExchange());
     }
     //Queues
     @Bean
     public Queue saveQueue(RabbitConstants constants){
-        return new Queue(constants.saveQueue);
+        return new Queue(constants.getQueue().getSave());
     }
     @Bean
-    public Queue showQueue(){
-        return new Queue(rabbitConstants().showQueue);
+    public Queue showQueue(RabbitConstants constants){
+        return new Queue(constants.getQueue().getShow());
     }
     @Bean
-    public Queue showAnswerQueue(){
-        return new Queue(rabbitConstants().showAnswerQueue);
+    public Queue showAnswerQueue(RabbitConstants constants){
+        return new Queue(constants.getQueue().getShowAnswer());
     }
     @Bean
-    public Queue saveAnswerQueue(){
-        return new Queue(rabbitConstants().saveAnswerQueue);
+    public Queue saveAnswerQueue(RabbitConstants constants){
+        return new Queue(constants.getQueue().getSaveAnswer());
     }
     //Binding
     @Bean
-    public Binding saveBinding(Queue saveQueue, TopicExchange exchange){
+    public Binding saveBinding(Queue saveQueue, TopicExchange exchange, RabbitConstants constants){
         return BindingBuilder
                 .bind(saveQueue)
-                .to(exchange).with(rabbitConstants().saveRoutingKey);
+                .to(exchange).with(constants.getRoutingKey().getSave());
     }
     @Bean
-    public Binding showBinding(Queue showQueue, TopicExchange exchange){
+    public Binding showBinding(Queue showQueue, TopicExchange exchange,RabbitConstants constants){
         return BindingBuilder
                 .bind(showQueue)
-                .to(exchange).with(rabbitConstants().showRoutingKey);
+                .to(exchange).with(constants.getRoutingKey().getShow());
     }
     @Bean
-    public Binding showAnswerBinding(Queue showAnswerQueue, TopicExchange exchange){
+    public Binding showAnswerBinding(Queue showAnswerQueue, TopicExchange exchange, RabbitConstants constants){
         return BindingBuilder
                 .bind(showAnswerQueue)
-                .to(exchange).with(rabbitConstants().showAnswerRoutingKey);
+                .to(exchange).with(constants.getRoutingKey().getShowAnswer());
     }
     @Bean
-    public Binding saveAnswerBinding(Queue saveAnswerQueue, TopicExchange exchange){
+    public Binding saveAnswerBinding(Queue saveAnswerQueue, TopicExchange exchange, RabbitConstants constants){
         return BindingBuilder
                 .bind(saveAnswerQueue)
-                .to(exchange).with(rabbitConstants().saveAnswerRoutingKey);
+                .to(exchange).with(constants.getRoutingKey().getSaveAnswer());
     }
     @Bean
     public MessageConverter messageConverter(){

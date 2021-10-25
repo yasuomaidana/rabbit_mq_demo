@@ -1,7 +1,7 @@
 package com.example.frontend.controller;
 
 import com.example.frontend.service.DogService;
-import dto.DogDto;
+import dto.Dog;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -33,16 +33,16 @@ class DogControllerTest {
     @Mock
     Model model;
 
-    private DogDto dog;
-    private List<DogDto> dogs = new ArrayList<>();
+    private Dog dog;
+    private List<Dog> dogs = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        dog = DogDto.builder().name("Terry").race("Doverman").age((byte) 2).build();
+        dog = Dog.builder().name("Terry").race("Doverman").age((byte) 2).build();
         dogs.add(dog);
         when(dogService.getDogs()).thenReturn(dogs);
-        when(dogService.saveDog(any(DogDto.class))).thenReturn(dogs);
+        when(dogService.saveDog(any(Dog.class))).thenReturn(dogs);
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setPrefix("/WEB-INF/");
         viewResolver.setSuffix(".jsp");
@@ -56,7 +56,7 @@ class DogControllerTest {
     void show() throws Exception {
         MvcResult mockResult = mockMvc.perform(get("/show")).andReturn();
         String showViewName = mockResult.getModelAndView().getViewName();
-        List<DogDto> dogsResult = (List<DogDto>) mockResult.getRequest().getAttribute("dogs");
+        List<Dog> dogsResult = (List<Dog>) mockResult.getRequest().getAttribute("dogs");
         assertEquals("show",showViewName);
         assertEquals(dogs,dogsResult);
     }
@@ -72,7 +72,7 @@ class DogControllerTest {
     void newDogRegister() throws Exception {
         //Testing with a badDog
         when(fakeError.hasErrors()).thenReturn(true);
-        DogDto dogError = DogDto.builder().name("Error Dog").build();
+        Dog dogError = Dog.builder().name("Error Dog").build();
         DogController dogController = new DogController(dogService);
         String responseView = dogController.newDogRegister(model, dogError, fakeError);
         assertEquals("register",responseView);

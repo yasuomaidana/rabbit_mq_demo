@@ -1,7 +1,7 @@
 package com.example.frontend.controller;
 
 import com.example.frontend.service.DogService;
-import dto.DogDto;
+import dto.Dog;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,8 +9,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.HashMap;
 
 @Controller @RequestMapping("/")
 @AllArgsConstructor
@@ -29,12 +27,9 @@ public class DogController {
     }
 
     @PostMapping("/register")
-    public String newDogRegister(Model model, DogDto dog, Errors errors){
+    public String newDogRegister(Model model, Dog dog, Errors errors){
         if(errors.hasErrors()){
-            HashMap<String,String> rawInfo = new HashMap<>();
-            rawInfo.put("name",dog.getName());
-            rawInfo.put("race",dog.getRace());
-            model.addAttribute("Error",rawInfo);
+            model.addAttribute("Error",dog);
             return "register";
         }
         model.addAttribute("dogs",dogService.saveDog(dog));

@@ -1,4 +1,4 @@
-<%@ page import="dto.DogDto" %>
+<%@ page import="dto.Dog" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: ymaidana
@@ -47,10 +47,10 @@
                 </thead>
                 <tbody>
                 <%
-                    List<DogDto> dogs = (List<DogDto>) request.getAttribute("dogs");
+                    List<Dog> dogs = (List<Dog>) request.getAttribute("dogs");
                     String row = "<tr><th scope=\"row\">%d</th><td>%s</td><td>%s</td><td>%d</td></tr>";
                     int i =0;
-                    for(DogDto dog: dogs){
+                    for(Dog dog: dogs){
                         i++;
                         out.print(String.format(row,i,dog.getName(),dog.getRace(),dog.getAge()));
                     }
