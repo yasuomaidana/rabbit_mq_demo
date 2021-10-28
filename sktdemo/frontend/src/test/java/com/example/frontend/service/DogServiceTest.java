@@ -4,6 +4,7 @@ import constant.RabbitConstants;
 import constant.RabbitQueuesConfigurationProperties;
 import constant.RabbitRoutingConfiguration;
 import dto.Dog;
+import mapper.DogMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,7 +26,8 @@ class DogServiceTest {
     private RabbitConstants constants;
     @InjectMocks
     private DogService dogService;
-
+    @Mock
+    private DogMapper mapper;
     private ArrayList<LinkedHashMap> rawDogs;
     private Dog dog;
     private void initConstants(){
@@ -51,7 +53,7 @@ class DogServiceTest {
         });
         dog = Dog.builder().name("Terry").race("Doberman").age((byte) 2).build();
         initConstants();
-        dogService = new DogService(template,constants);
+        dogService = new DogService(template,constants,mapper);
     }
 
     @Test
