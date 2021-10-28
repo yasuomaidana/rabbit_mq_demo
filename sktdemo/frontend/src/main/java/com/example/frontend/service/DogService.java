@@ -5,6 +5,8 @@ import dto.Dog;
 import lombok.AllArgsConstructor;
 import mapper.DogMapper;
 
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +22,11 @@ public class DogService {
 
     public List<Dog> getDogs(){
         template.convertAndSend(constants.getExchange(),constants.getRoutingKey().getShow(),"Hi");
+        Message receivedDogs = template.receive(constants.getQueue().getShowAnswer(),
+                6000);
+        if (receivedDogs==null) throw new AmqpException("Dogs couldn't be received");
         return mapper
-                .dogsFromMessage(
-                        template.receive(
-                                constants.getQueue().getShowAnswer(),
-                                6000).getBody()
-                );
+                .dogsFromMessage(receivedDogs.getBody());
     }
 
     public List<Dog> saveDog(Dog dog){
