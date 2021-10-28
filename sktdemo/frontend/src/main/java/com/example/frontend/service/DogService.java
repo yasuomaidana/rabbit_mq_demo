@@ -31,11 +31,12 @@ public class DogService {
 
     public List<Dog> saveDog(Dog dog){
         template.convertAndSend(constants.getExchange(),constants.getRoutingKey().getSave(),dog);
+        Message receivedDogs = template.receive(
+                constants.getQueue().getSaveAnswer(),
+                6000);
+        if (receivedDogs==null) throw new AmqpException("Dogs couldn't be received");
         return mapper
-                .dogsFromMessage(
-                        template.receive(
-                                constants.getQueue().getSaveAnswer(),
-                                6000).getBody());
+                .dogsFromMessage(receivedDogs.getBody());
 
     }
 }

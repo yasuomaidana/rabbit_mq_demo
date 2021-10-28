@@ -26,7 +26,7 @@
                             <a href="/show" class="nav-link px-2 text-white">Show data</a>
                         </li>
                         <li>
-                            <a class="nav-link px-2 text-secondary">Register new item</a>
+                            <a href="/register" class="nav-link px-2 text-white">Register new item</a>
                         </li>
                     </ul>
                 </div>
