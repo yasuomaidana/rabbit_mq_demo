@@ -17,14 +17,14 @@ public class DogService {
     private DogMapper mapper;
 
     public List<Dog> getDogs(){
-        return converToList(repository.getDogs());
+        return convertToList(repository.getDogs());
     }
 
     public List<Dog> saveDog(Dog dog){
-        return converToList(repository.saveDog(dog.getName(), dog.getRace(),dog.getAge()));
+        return convertToList(repository.saveDog(dog.getName(), dog.getRace(),dog.getAge()));
     }
     //add mapper
-    private List<Dog> converToList(List<DogEntity> rawDogs){
+    private List<Dog> convertToList(List<DogEntity> rawDogs){
         return rawDogs.stream()
                 .map(mapper::entityToDto)
                 .collect(Collectors.toList());
