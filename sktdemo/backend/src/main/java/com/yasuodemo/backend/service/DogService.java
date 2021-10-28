@@ -4,6 +4,7 @@ import com.yasuodemo.backend.entity.DogEntity;
 import com.yasuodemo.backend.repository.DogRepository;
 import dto.Dog;
 import lombok.AllArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class DogService {
     private DogRepository repository;
-
+    private RabbitTemplate template;
     public List<Dog> getDogs(){
         return converToList(repository.getDogs());
     }

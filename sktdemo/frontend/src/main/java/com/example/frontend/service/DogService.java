@@ -1,11 +1,15 @@
 package com.example.frontend.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import constant.RabbitConstants;
 import dto.Dog;
 import lombok.AllArgsConstructor;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,7 +24,18 @@ public class DogService {
 
     public List<Dog> getDogs(){
         template.convertAndSend(constants.getExchange(),constants.getRoutingKey().getShow(),"Hi");
-        return  rawToList(template.receiveAndConvert(constants.getQueue().getShowAnswer(), 6000));
+        Message rawData = template.receive(constants.getQueue().getShowAnswer(), 6000);
+        byte[] body = rawData.getBody();
+        String message = new String(body);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            List<Dog> dogs = objectMapper.readValue(message, new TypeReference<List<Dog>>() {});
+            System.out.println(dogs.toString());
+            return  dogs;
+        } catch (IOException e) {
+            throw new RuntimeException("Error receiving dogs");
+        }
+
     }
 
     public List<Dog> saveDog(Dog dog){
