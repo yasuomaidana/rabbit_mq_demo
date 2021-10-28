@@ -1,10 +1,10 @@
 package com.yasuodemo.backend.service;
 
 import com.yasuodemo.backend.entity.DogEntity;
+import com.yasuodemo.backend.mapper.DogMapper;
 import com.yasuodemo.backend.repository.DogRepository;
 import dto.Dog;
 import lombok.AllArgsConstructor;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class DogService {
     private DogRepository repository;
-    private RabbitTemplate template;
+    private DogMapper mapper;
+
     public List<Dog> getDogs(){
         return converToList(repository.getDogs());
     }
@@ -25,15 +26,7 @@ public class DogService {
     //add mapper
     private List<Dog> converToList(List<DogEntity> rawDogs){
         return rawDogs.stream()
-                .map(dogEntity ->
-                        {
-                            return Dog.builder()
-                                    .name(dogEntity.getName())
-                                    .race(dogEntity.getRace())
-                                    .age(dogEntity.getAge())
-                                    .build();
-                        }
-                )
+                .map(mapper::entityToDto)
                 .collect(Collectors.toList());
     }
 }
