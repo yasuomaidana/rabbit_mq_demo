@@ -43,16 +43,16 @@
                         <th scope="col">#</th>
                         <th scope="col">Dog's name</th>
                         <th scope="col">Race</th>
-                        <th scope="col">Age [years:months]</th>
+                        <th scope="col">Age [years]</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${dogs}" var="dog" varStatus="Count">
+                    <c:forEach items="${dogs}" var="dog" varStatus="count">
                         <tr>
-                            <th scope="row">${Count.getCount()}</th>
-                            <td>${dog.getName()}</td>
-                            <td>${dog.getRace()}</td>
-                            <td>${dog.getAge()}</td>
+                            <th scope="row">${count.getCount()}</th>
+                            <td>${dog.name}</td>
+                            <td>${dog.race}</td>
+                            <td>${dog.age}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
