@@ -1,1 +1,1 @@
-# skt_demo
+# Rabbit MQ Example
