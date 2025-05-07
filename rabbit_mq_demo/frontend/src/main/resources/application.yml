@@ -4,7 +4,7 @@ spring:
   rabbitmq:
     port: 8086
 rabbit:
-  exchange: "skt_demo_exchange"
+  exchange: "demo_exchange"
   queue:
     save: "save_queue"
     show: "show_queue"
